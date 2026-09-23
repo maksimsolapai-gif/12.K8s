@@ -59,3 +59,23 @@ curl nginx-test.k8s-7.sa
 
 
 ---
+### Homework Assignment 2. Self-hosted runner inside k8s (optional) 
+* deploy pod inside k8s which should be connected to github as self-hosted runner
+  
+🔑 Шаг 1: Подготовка GitHub Token
+Перейдите в ваш репозиторий на GitHub ➔ Settings ➔ Actions ➔ Runners.Нажмите New self-hosted runner.
+
+🔐 Шаг 2: Создание Kubernetes Secret
+```
+bashkubectl create secret generic github-runner-secret \
+  --from-literal=GH_OWNER="ВАШ_GITHUB_АККАУНТ" \
+  --from-literal=GH_REPOSITORY="ИМЯ_ВАШЕГО_РЕПОЗИТОРИЯ" \
+  --from-literal=GH_TOKEN="ВАШ_СКОПИРОВАННЫЙ_ТОКЕН" \
+  --context k8s
+```
+Шаг 3: Манифест Runner (Файл github-runner.yaml)
+
+
+kubectl apply -f github-runner.yaml --context k8s
+
+
